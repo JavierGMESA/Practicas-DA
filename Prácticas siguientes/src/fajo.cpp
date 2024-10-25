@@ -32,20 +32,6 @@ ostream& operator <<(ostream& fs, const fajos& f)
     return fs;
 }
 
-fajos::const_iterator select_fajo(const fajos& C)
-{
-    fajos::const_iterator i, res;
-    res = C.begin();
-    for(i = C.begin(); i != C.end(); ++i)
-    {  
-        if((*i).valor() >  (*res).valor())
-        {
-            res = i;
-        }
-    }
-    return res;
-}
-
 int min(int a , int b)
 {
     if(a < b)

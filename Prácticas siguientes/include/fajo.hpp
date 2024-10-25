@@ -7,7 +7,7 @@
 #include <iterator>
 #include <algorithm>
 
-class fajo {
+class fajo{
 public:
     fajo(): v{0}, u{0} {}
     fajo(unsigned int v, unsigned int u): v{v}, u{u} {}
@@ -37,7 +37,6 @@ std::istream& operator >>(std::istream& fe, fajos& f);
 std::ostream& operator <<(std::ostream& fs, const fajo& f);
 std::ostream& operator <<(std::ostream& fs, const fajos& f);
 
-fajos::const_iterator select_fajo(const fajos& C);
 int min(int a , int b);
 fajos reintegrar(const fajos& caja, unsigned int cantidad);
 
