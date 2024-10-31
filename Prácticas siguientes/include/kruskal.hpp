@@ -30,7 +30,7 @@ std::list<Arista> ordenarAristas(const std::list<Arista>& aristas)
 template <typename G> //Suponemos que el tipo G es un grafo ponderado
 G Kruskal1(const G& g)
 {
-    //using std::list;
+    using std::list;
     using Arista = typename G::Arista;  //IMPORTANTE: OTRA FORMA DE USAR EL typedef
     using Vertice = typename G::Vertice;
     size_t n = g.nVertices();           // Número de vértices del grafo original.
@@ -99,17 +99,7 @@ G Kruskal2(const G& g)
 
     std::cout << "Va a crear el montículo" << std::endl;
     
-    //std::priority_queue<Arista> l(c.begin(), c.end()); //Cola de prioridad preordenada
-    std::priority_queue<Arista> l;
-    std::cout << "Va a empezar a insertar en la cola" << std::endl;
-    try {
-        for (const auto& arista : c) {
-            l.push(arista);
-            std::cout << "Arista insertada en la cola de prioridad" << std::endl;
-        }
-    } catch (...) {
-        std::cerr << "Excepción durante la inserción en la cola de prioridad: " << std::endl;
-    }
+    std::priority_queue<Arista> l(c.begin(), c.end()); //Cola de prioridad preordenada
 
     std::cout << "Empieza el bucle" << std::endl;
     while(n_uniones < n - 1)
