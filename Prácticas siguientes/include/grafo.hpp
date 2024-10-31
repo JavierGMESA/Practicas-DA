@@ -3,6 +3,8 @@
 
 #include <list>
 
+#include <iostream>
+
 // Arista.
 
 template <typename V>
@@ -34,5 +36,6 @@ private:
   size_t n;
   Aristas a;
 };
+
 
 #endif

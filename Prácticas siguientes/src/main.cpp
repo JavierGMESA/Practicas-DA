@@ -1,16 +1,25 @@
 #include <iostream>
 
+#include "cronometro.hpp"
 
 #include "fajo.hpp"
 #include "particion.hpp"
+#include "grafo-ponderado.hpp"
+#include "kruskal.hpp"
 
 void P1ej1();
 void P1ej2();
+void P1ej3();
+void P1ej4();
+void P1ej5();
 
 int main() {
-    std::cout << "Hello Easy C++ project!" << std::endl;
-    P1ej1();
-    P1ej2();
+    //P1ej1();
+    //P1ej2();
+    P1ej3();
+    P1ej4();
+
+    std::cout << std::endl << std::endl << "System pause" << std::endl;
 }
 
 void P1ej1()
@@ -30,4 +39,44 @@ void P1ej2()
     P.unir(0, 1);
     P.unir(P.buscar(0), 2);
     std::cout << P.buscar(2) << " " << P.buscar(0) << std::endl;
+}
+
+void P1ej3()
+{
+    GrafoPonderado<int> g;
+    std::ifstream datos("grafo.dat"); //IMPORTANTE: LECTURA DE FICHERO
+    datos >> g;
+    std::cout << g << std::endl;
+
+    GrafoPonderado g1 = Kruskal1(g);
+    std::cout << g1 << std::endl;
+}
+
+void P1ej4()
+{
+    GrafoPonderado<int> g;
+    std::ifstream datos("grafo.dat"); //IMPORTANTE: LECTURA DE FICHERO
+    datos >> g;
+    std::cout << g << std::endl;
+
+    GrafoPonderado g1 = Kruskal2(g);
+    std::cout << g1 << std::endl;
+}
+
+void P1ej5()
+{
+    cronometro crono;
+    GrafoPonderado<int> g;
+    std::ifstream datos("grafo.dat"); //IMPORTANTE: LECTURA DE FICHERO
+    datos >> g;
+
+    crono.activar();
+    GrafoPonderado g1 = Kruskal1(g);
+    crono.parar();
+    std::cout << "El tipo en la preordenacion ha sido " << crono.tiempo() << std::endl;
+
+    crono.activar();
+    GrafoPonderado g2 = Kruskal2(g);
+    crono.parar();
+    std::cout << "El tipo con los montículos ha sido " << crono.tiempo() << std::endl;
 }
