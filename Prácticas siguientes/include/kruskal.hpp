@@ -30,28 +30,31 @@ std::list<Arista> ordenarAristas(const std::list<Arista>& aristas)
 template <typename G> //Suponemos que el tipo G es un grafo ponderado
 G Kruskal1(const G& g)
 {
-    using std::list;
+    //using std::list;
     using Arista = typename G::Arista;  //IMPORTANTE: OTRA FORMA DE USAR EL typedef
     using Vertice = typename G::Vertice;
-    size_t n = g.nVertices(); // Número de vértices del grafo original.
+    size_t n = g.nVertices();           // Número de vértices del grafo original.
 
     std::cout << "Crea el grafo solución" << std::endl;
 
-    G s(n); // Grafo solución.
-    Particion p(n); // Construye la partición inicial.
+    G s(n);         //Grafo solución.
+    Particion p(n); //Construye la partición inicial.
 
     std::cout << "Va a crear la lista de aristas" << std::endl;
 
-    list<Arista> l(g.aristas()); // Lista de candidatos.
+    std::list<Arista> l(g.aristas()); //SE CORROMPE EN ESTE PUNTO
 
     std::cout << "Termina de crear la lista" << std::endl;
+
     int n_uniones = 0;
     unsigned v1, v2;
 
     std::cout << "Va a preordenar" << std::endl;
     
-    auto lo = ordenarAristas(l);
+    auto lo = ordenarAristas(l); //Lista de candidatos preordenados.
+
     std::cout << "Empieza el bucle" << std::endl;
+
     while(n_uniones < n - 1)
     {
         Arista a = lo.front();

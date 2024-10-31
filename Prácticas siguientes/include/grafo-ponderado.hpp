@@ -5,8 +5,9 @@
 
 #include <iostream>
 
-// Arista ponderada.
+using namespace std;
 
+// Arista ponderada.
 template <typename V, typename P = double >
 class AristaPonderada: public Arista<V> {
 public:
@@ -35,19 +36,19 @@ public:
 };
 
 template <typename V, typename P>
-std::istream& operator >>(std::istream& fe, AristaPonderada<V, P>& a)
+istream& operator >>(istream& fe, AristaPonderada<V, P>& a)
 {
   return fe >> a.primero() >> a.segundo() >> a.peso();
 }
 
 template <typename V, typename P>
-std::ostream& operator <<(std::ostream& fs, const AristaPonderada<V, P>& a)
+ostream& operator <<(ostream& fs, const AristaPonderada<V, P>& a)
 {
   return fs << a.primero() << ' ' << a.segundo() << ' ' << a.peso();
 }
 
 template <typename V, typename A>
-std::istream& operator >>(std::istream& fe, Grafo<V, A>& g)
+istream& operator >>(istream& fe, Grafo<V, A>& g)
 {
   size_t n = 0;
   fe >> n;
@@ -60,12 +61,12 @@ std::istream& operator >>(std::istream& fe, Grafo<V, A>& g)
 }
 
 template <typename V, typename A>
-std::ostream& operator <<(std::ostream& fs, const Grafo<V, A>& g)
+ostream& operator <<(ostream& fs, const Grafo<V, A>& g)
 {
   fs << g.nVertices() << '\n';
   auto& a = g.aristas();
-  copy(begin(a), end(a), std::ostream_iterator<A>(fs, "\n"));
-  return fs << std::flush;
+  copy(begin(a), end(a), ostream_iterator<A>(fs, "\n"));
+  return fs << flush;
 }
 
 
