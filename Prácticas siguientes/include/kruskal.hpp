@@ -23,27 +23,15 @@ G Kruskal1(const G& g)
     size_t n = g.nVertices();           // Número de vértices del grafo original.
     G s(n);         //Grafo solución.
     Particion p(n); //Construye la partición inicial.
-
-    std::cout << "Va a crear la lista de aristas" << std::endl;
-
-    std::list<Arista> l(g.aristas()); //SE CORROMPE EN ESTE PUNTO
-
-    std::cout << "Termina de crear la lista" << std::endl;
-
+    list<Arista> c(g.aristas()); //lista de candidatos
     int n_uniones = 0;
-    unsigned v1, v2;
-
-    std::cout << "Va a preordenar" << std::endl;
-    
-    l.sort();
-    l.reverse(); //Lista de candidatos preordenados.
-
-    std::cout << "Empieza el bucle" << std::endl;
+    int v1, v2;
+    c.sort(std::less<Arista>()); //Lista de candidatos preordenados. IMPORTANTE: USO DE SORT PARA PREORDENAR
 
     while(n_uniones < n - 1)
     {
-        Arista a = l.front();
-        l.pop_front();
+        Arista a = *(c.begin());
+        c.erase(c.begin());
         v1 = p.buscar(a.primero());
         v2 = p.buscar(a.segundo());
         if(v1 != v2)
@@ -51,8 +39,6 @@ G Kruskal1(const G& g)
             p.unir(v1, v2);
             s.insertarArista(a);
             ++n_uniones;
-            
-            std::cout << "union " << n_uniones << std::endl;
         }
     }
 
@@ -68,26 +54,14 @@ G Kruskal2(const G& g)
     using Vertice = typename G::Vertice;
     size_t n = g.nVertices(); // Número de vértices del grafo original.
 
-    std::cout << "Crea el grafo solución" << std::endl;
-
     G s(n); // Grafo solución.
     Particion p(n); // Construye la partición inicial.
 
-    std::cout << "Va a crear la lista de aristas" << std::endl;
-
-    //list<Arista> c(g.aristas()); // Lista de candidatos.
-    const auto& c = g.aristas();
-
-
-    std::cout << "Termina de crear la lista" << std::endl;
+    list<Arista> c(g.aristas()); // Lista de candidatos.
     int n_uniones = 0;
     unsigned v1, v2;
-
-    std::cout << "Va a crear el montículo" << std::endl;
     
-    std::priority_queue<Arista> l(c.begin(), c.end()); //Cola de prioridad preordenada
-
-    std::cout << "Empieza el bucle" << std::endl;
+    std::priority_queue<Arista, std::vector<Arista>, std::greater<Arista>> l(c.begin(), c.end()); //Cola de prioridad preordenada
     while(n_uniones < n - 1)
     {
         Arista a = l.top();
@@ -99,7 +73,6 @@ G Kruskal2(const G& g)
             p.unir(v1, v2);
             s.insertarArista(a);
             ++n_uniones;
-            std::cout << "union " << n_uniones << std::endl;
         }
     }
 

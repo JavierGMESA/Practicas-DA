@@ -16,8 +16,9 @@ void P1ej5();
 int main() {
     //P1ej1();
     //P1ej2();
-    P1ej3();
-    P1ej4();
+    //P1ej3();
+    //P1ej4();
+    P1ej5();
 
     std::cout << std::endl << std::endl << "System pause" << std::endl;
 }

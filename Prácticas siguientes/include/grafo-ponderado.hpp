@@ -19,10 +19,18 @@ private:
   Peso p;
 };
 
-template <typename V, typename P>
+//IMPORTANTE: PARA LA PREORDENACIÓN NECESITAMOS EL < PARA PODER PREORDENAR DE MENOR A MAYOR USANDO EL std::less<Arista> EN EL MÉTODO sort()
+template <typename V, typename P = double >
 bool operator <(const AristaPonderada<V, P>& a, const AristaPonderada<V, P>& b) 
 {
     return a.peso() < b.peso();
+}
+
+//IMPORTANTE: PARA LA PREORDENACIÓN NECESITAMOS EL > PARA PODER PREORDENAR DE MENOR A MAYOR USANDO EL std::greater<Arista> EN LA priority_queue
+template <typename V, typename P = double >
+bool operator >(const AristaPonderada<V, P>& a, const AristaPonderada<V, P>& b) 
+{
+    return a.peso() > b.peso();
 }
 
 
