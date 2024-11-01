@@ -43,13 +43,13 @@ void P1ej2()
 
 void P1ej3()
 {
-    GrafoPonderado<int> g;
-    std::ifstream datos("grafo.dat"); //IMPORTANTE: LECTURA DE FICHERO
-    datos >> g;
-    std::cout << g << std::endl;
+    using namespace std;
+    GrafoPonderado<int> G;
+    ifstream datos("grafo.dat"); //IMPORTANTE: LECTURA DE FICHERO
+    datos >> G;
+    cout << G << endl;
 
-    GrafoPonderado g1 = Kruskal1(g);
-    std::cout << g1 << std::endl;
+    cout << Kruskal1(G) << endl;
 }
 
 void P1ej4()
