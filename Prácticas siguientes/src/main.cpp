@@ -7,18 +7,27 @@
 #include "grafo-ponderado.hpp"
 #include "kruskal.hpp"
 
+#include "mochilaDiscreta.hpp"
+
 void P1ej1();
 void P1ej2();
 void P1ej3();
 void P1ej4();
 void P1ej5();
 
+void P2ej1();
+void P2ej2();
+
+
 int main() {
     //P1ej1();
     //P1ej2();
     //P1ej3();
     //P1ej4();
-    P1ej5();
+    //P1ej5();
+
+    P2ej1();
+    P2ej2();
 
     std::cout << std::endl << std::endl << "System pause" << std::endl;
 }
@@ -80,4 +89,20 @@ void P1ej5()
     GrafoPonderado g2 = Kruskal2(g);
     crono.parar();
     std::cout << "El tipo con los montículos ha sido " << crono.tiempo() << std::endl;
+}
+
+void P2ej1()
+{
+    Objetos o;
+    std::ifstream datos("objetos.dat");
+    datos >> o;
+    std::cout << o << std::endl;
+
+    Objetos solucion = mochila(o, 50);
+    std::cout << solucion << std::endl;
+}
+
+void P2ej2()
+{
+    
 }
