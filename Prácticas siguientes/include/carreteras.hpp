@@ -33,8 +33,6 @@ public:
 private:
 };
 
-const double MatrizPesos::INFINITO = std::numeric_limits<double>::max();
-
 class MatrizCaminos:public MatrizCuadrada<int>
 {
 public:
@@ -45,6 +43,8 @@ private:
 
 using Camino = std::list<std::size_t>;
 
+double suma(double a, double b);
+
 MatrizCaminos Floyd(MatrizPesos& p);
 
 Camino CaminoMinimo(const MatrizCaminos& c, std::size_t i, std::size_t j);
@@ -52,7 +52,5 @@ Camino CaminoMinimo(const MatrizCaminos& c, std::size_t i, std::size_t j);
 using namespace std;
 ostream& operator <<(ostream& os, const std::map<std::size_t, std::string>& m);
 ostream& operator <<(ostream& os, const std::list<std::string> l);
-//Devuelve el número de ciudades
-size_t leerCiudades(map<string, size_t>& codigo, map<size_t, string>& ciudad);
 
 #endif

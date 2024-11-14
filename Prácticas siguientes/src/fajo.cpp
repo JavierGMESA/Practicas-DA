@@ -16,7 +16,7 @@ istream& operator >>(istream& fe, fajo& f)
 istream& operator >>(istream& fe, fajos& f)
 {
     istream_iterator<fajo> ife(fe), fin;
-    copy(ife, fin, back_inserter(f)); //inserto al final del vector
+    copy(ife, fin, back_inserter(f)); //inserto al final del vector. IMPORTANTE: USO DE LA FUNCION copy
     return fe;
 }
 
@@ -28,7 +28,7 @@ ostream& operator <<(ostream& fs, const fajo& f)
 
 ostream& operator <<(ostream& fs, const fajos& f)
 {
-    copy(begin(f), end(f), ostream_iterator<fajo>(fs, "\n"));
+    copy(begin(f), end(f), ostream_iterator<fajo>(fs, "\n")); //IMPORTANTE: USO DE LA FUNCIÓN copy Y DE ostream_iterator
     return fs;
 }
 
