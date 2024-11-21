@@ -11,6 +11,10 @@
 #include "mochilaDiscreta.hpp"
 #include "carreteras.hpp"
 
+#include "tabla64.hpp"
+#include "matriz.hpp"
+#include "potenciaMatriz.hpp"
+
 void P1ej1();
 void P1ej2();
 void P1ej3();
@@ -20,6 +24,14 @@ void P1ej5();
 void P2ej1();
 void P2ej2();
 
+void P3ej1();
+ostream& operator <<(ostream& fs, matriz& a);
+// Función delta de Kronecker.
+inline double delta(size_t i, size_t j)
+{
+  return i == j;
+}
+void P3ej2();
 
 int main() {
     //P1ej1();
@@ -29,7 +41,9 @@ int main() {
     //P1ej5();
 
     //P2ej1();
-    P2ej2();
+    //P2ej2();
+    //P3ej1();
+    P3ej2();
 
     std::cout << std::endl << std::endl << "System pause" << std::endl;
 }
@@ -191,4 +205,54 @@ void P2ej2()
         }
     }
     dgt.close();
+}
+
+void P3ej1()
+{
+    fila_tabla* tabla = tabla64(64);
+    for(int i = 0; i < 64; ++i)
+    {
+        std::cout << tabla[i] << std::endl;
+    }
+}
+
+void P3ej2()
+{
+    matriz a(3, 3);	  // Matriz nula de 3×3.
+    matriz b(3, 3, 2.0);    // Matriz de 3×3 con todos sus elementos a 2. 
+    matriz c(3, 3, delta);  // Matriz identidad de 3×3.
+    a = c;
+    cout << "A =\n" << a << endl;
+    b += -a;
+    cout << "B =\n" << b << endl;
+    c *= c += c;
+    cout << "C =\n" << c << endl;
+    matriz d(a + b * c);
+    cout << "A + B * C =\n" << d << endl;
+    matriz e(100, 100, delta);
+    cronometro crono;
+    crono.activar();
+    for(int i = 1; i <= 64; ++i)
+    {
+        matriz f = potencia_iterativa(e, i);
+    }
+    crono.parar();
+    std::cout << "El tiempo en el iterativo es " << crono.tiempo() << std::endl;
+    crono.activar();
+    for(int i = 1; i <= 64; ++i)
+    {
+        matriz f = potencia_rapida(e, i);
+    }
+    crono.parar();
+    std::cout << "El tiempo en el de potencia rapida es " << crono.tiempo() << std::endl;
+}
+
+ostream& operator <<(ostream& fs, matriz& a)
+{
+  for (size_t i = 0; i < a.filas(); ++i) {
+    for (size_t j = 0; j < a.columnas(); ++j)
+      fs << a[i][j] << ' ';
+    fs << '\n';
+  }
+  return fs;
 }
