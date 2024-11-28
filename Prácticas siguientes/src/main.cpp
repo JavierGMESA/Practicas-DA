@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <random>
 
 #include "cronometro.hpp"
 
@@ -14,6 +15,7 @@
 #include "tabla64.hpp"
 #include "matriz.hpp"
 #include "potenciaMatriz.hpp"
+#include "ordenacion.hpp"
 
 void P1ej1();
 void P1ej2();
@@ -32,6 +34,10 @@ inline double delta(size_t i, size_t j)
   return i == j;
 }
 void P3ej2();
+void P3ej4();
+void P3ej5();
+void P3ej6();
+void P3ej7();
 
 int main() {
     //P1ej1();
@@ -42,8 +48,13 @@ int main() {
 
     //P2ej1();
     //P2ej2();
+    
     //P3ej1();
-    P3ej2();
+    //P3ej2();
+    //P3ej4();
+    //P3ej5();
+    //P3ej6();
+    P3ej7();
 
     std::cout << std::endl << std::endl << "System pause" << std::endl;
 }
@@ -245,6 +256,164 @@ void P3ej2()
     }
     crono.parar();
     std::cout << "El tiempo en el de potencia rapida es " << crono.tiempo() << std::endl;
+}
+
+void P3ej4()
+{
+    std::vector<int> v(20);
+    for(int i = 0; i < 20; ++i)
+    {
+        v[i] = 20 - i;
+    }
+
+    for(auto i: v)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
+    ordenacion_fusion(v.begin(), v.end(), 2);
+
+    for(auto i: v)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
+    for(int i = 0; i < 20; ++i)
+    {
+        v[i] = 20 - i;
+    }
+
+    for(auto i: v)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
+    ordenacion_rapida(v.begin(), v.end(), 2);
+
+    for(auto i: v)
+    {
+        std::cout << i << " ";
+    }
+}
+
+void P3ej5()
+{
+    for(int i = 0; i < 13; ++i)
+    {
+        std::vector<int> v(i);
+        for(int j = 0; j < i; ++j)
+        {
+            v[j] = j + 1;
+        }
+
+        std::vector<int> w = v;
+
+        while(std::next_permutation(v.begin(), v.end()))
+        {
+            std::vector<int> x1 = v;
+            std::vector<int> x2 = v;
+            ordenacion_fusion(x1.begin(), x1.end(), 4);
+            for(auto l: x1)
+            {
+                std::cout << l << " ";
+            }
+            std::cout << std::endl;
+            ordenacion_rapida(x2.begin(), x2.end(), 4);
+            for(auto l: x2)
+            {
+                std::cout << l << " ";
+            }
+            std::cout << std::endl;
+            if(x1 != w)
+            {
+                std::cout << "No se ha ordenado con fusión con tamaño " << i << std::endl;
+            }
+            if(x2 != w)
+            {
+                std::cout << "No se ha ordenado con rápida con tamaño " << i << std::endl;
+            }
+        }
+        std::cout << "Fin con tamaño " << i << std::endl;
+    }
+}
+
+void P3ej6()
+{
+    cronometro c;
+    std::default_random_engine gnp;
+    for(double i = 0; i <= 1000000; i += 20000)
+    {
+        std::vector<double> v(i);
+        for(int j = 0; j < i; ++j)
+        {
+            v[j] = j + 1;
+        }
+
+        std::vector<double> w = v;
+
+        c.activar();
+        for(int iteraciones = 0; iteraciones < 10; ++iteraciones)
+        {
+            std::vector<double> x1 = v;
+            std::shuffle(x1.begin(), x1.end(), gnp);
+            std::vector<double> x2 = x1;
+            ordenacion_fusion(x1.begin(), x1.end(), 4);
+        }
+        c.parar();
+        std::cout << "El tiempo de ordenacion por fusion con tamaño " << i << " es " << (c.tiempo() / 20) << std::endl;
+        c.activar();
+        for(int iteraciones = 0; iteraciones < 10; ++iteraciones)
+        {
+            std::vector<double> x1 = v;
+            std::shuffle(x1.begin(), x1.end(), gnp);
+            std::vector<double> x2 = x1;
+            ordenacion_rapida(x1.begin(), x1.end(), 4);
+        }
+        c.parar();
+        std::cout << "El tiempo de ordenacion rápida con tamaño " << i << " es " << (c.tiempo() / 20) << std::endl;
+        std::cout << "Fin con tamaño " << i << std::endl;
+    }
+}
+
+void P3ej7()
+{
+    cronometro c;
+    std::default_random_engine gnp;
+    for(double i = 0; i <= 1000000; i += 20000)
+    {
+        std::vector<double> v(i);
+        for(int j = 0; j < i; ++j)
+        {
+            v[j] = j + 1;
+        }
+
+        std::vector<double> w = v;
+
+        c.activar();
+        for(int iteraciones = 0; iteraciones < 10; ++iteraciones)
+        {
+            std::vector<double> x1 = v;
+            std::shuffle(x1.begin(), x1.end(), gnp);
+            std::vector<double> x2 = x1;
+            ordenacion_fusion(x1.begin(), x1.end(), 8);
+        }
+        c.parar();
+        std::cout << "El tiempo de ordenacion por fusion con tamaño " << i << " es " << (c.tiempo() / 20) << std::endl;
+        c.activar();
+        for(int iteraciones = 0; iteraciones < 10; ++iteraciones)
+        {
+            std::vector<double> x1 = v;
+            std::shuffle(x1.begin(), x1.end(), gnp);
+            std::vector<double> x2 = x1;
+            ordenacion_rapida(x1.begin(), x1.end(), 4);
+        }
+        c.parar();
+        std::cout << "El tiempo de ordenacion rápida con tamaño " << i << " es " << (c.tiempo() / 20) << std::endl;
+        std::cout << "Fin con tamaño " << i << std::endl;
+    }
 }
 
 ostream& operator <<(ostream& fs, matriz& a)
