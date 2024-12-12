@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include <list>
 
 #include "cronometro.hpp"
 
@@ -16,6 +17,8 @@
 #include "matriz.hpp"
 #include "potenciaMatriz.hpp"
 #include "ordenacion.hpp"
+
+#include "damas.hpp"
 
 void P1ej1();
 void P1ej2();
@@ -39,6 +42,9 @@ void P3ej5();
 void P3ej6();
 void P3ej7();
 
+void P4ej1();
+void P4ej2();
+
 int main() {
     //P1ej1();
     //P1ej2();
@@ -54,7 +60,10 @@ int main() {
     //P3ej4();
     //P3ej5();
     //P3ej6();
-    P3ej7();
+    //P3ej7();
+
+    //P4ej1();
+    P4ej2();
 
     std::cout << std::endl << std::endl << "System pause" << std::endl;
 }
@@ -424,4 +433,26 @@ ostream& operator <<(ostream& fs, matriz& a)
     fs << '\n';
   }
   return fs;
+}
+
+void P4ej1()
+{
+    Tablero t(8);
+    t.coloca(4, 4);
+    std::cout << t[4] << std::endl << t << std::endl;
+    t.elimina(4, 4);
+    std::cout << "Va a mostrar con la dama eliminada" << std::endl << t << std::endl;
+}
+
+void P4ej2()
+{
+    Tablero t(7);
+    std::list<Tablero> soluciones = damas(t);
+    int i = 1;
+    for(auto s: soluciones)
+    {
+        std::cout << "Solución " << i << ":" << std::endl;
+        std::cout << s << std::endl << std::endl;
+        ++i;
+    }
 }
