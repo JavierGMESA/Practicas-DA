@@ -29,5 +29,6 @@ private:
 std::ostream& operator <<(std::ostream& fs, const Tablero& t);
 
 std::list<Tablero> damas(Tablero& t);
+std::list<Tablero> damas2(Tablero& t);
 
 #endif
