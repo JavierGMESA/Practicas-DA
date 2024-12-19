@@ -1,6 +1,8 @@
 #include "damas.hpp"
 #include <cassert>
 #include <algorithm>
+#include <unordered_set>
+#include <vector>
 
 Tablero::Tablero(int n): columna_dama(n, n), 
                          columna_amenazada(n, false), 
@@ -90,65 +92,73 @@ bool tablero_solucion(Tablero& t)
     return (n_damas == t.dimension());
 }
 
-std::list<Tablero> vuelta_atras(Tablero& t, std::list<Tablero>& cerrados)
+bool vuelta_atras1(std::vector<Tablero>& s, int k, std::list<Tablero>& soluciones)
 {
-    int n = t.dimension();
-    std::list<Tablero> soluciones;
-    for(int i = 0; i < n; ++i)
+    int n = s[k-1].dimension();
+    //for(int i = 0; i < n; ++i)        //IMPORTANTE: NO HAY QUE COMPROBAR EN CADA FILA PUES SOLO HABRÁ UNA REINA POR FILA  
+    bool solucion = false; 
+    int j = 0;         
+    while(j < n && !solucion)
     {
-        for(int j = 0; j < n; ++j)
+        if(!s[k-1].amenazada(k-1, j))
         {
+            s[k] = s[k-1];
+            s[k].coloca(k-1, j);
 
-            //std::cout << "fila " << i << " columna " << j << std::endl;
-
-            Tablero nuevo(t);
-            if(!nuevo.amenazada(i, j))
+            if(tablero_solucion(s[k]))
             {
-                nuevo.coloca(i, j);
-                bool cerrado = false;
-                //std::list<Tablero>::iterator it = cerrados.begin();
-                //while(it != cerrados.end() && !cerrado)
-                //{
-                //    int k = 0;
-                //    bool coincidencia = true;
-                //    while(k < n && coincidencia)
-                //    {
-                //        if((*it)[k] != nuevo[k]) coincidencia = false;
-                //        ++k;
-                //    }
-                //    if(coincidencia)
-                //    {
-                //        cerrado = true;
-                //    }
-                //    ++it;
-                //}
+                //if(std::find(soluciones.begin(), soluciones.end(), s[k]) == soluciones.end())
+                soluciones.push_back(s[k]);
+                solucion = true;
+            }
+            else
+            {
+                solucion = vuelta_atras1(s, k + 1, soluciones);
+            }
+        }
+        ++j;
+    }
+    return solucion;
+}
 
-                std::list<Tablero>::iterator it = std::find(cerrados.begin(), cerrados.end(), nuevo);
-                if(it == cerrados.end())
-                {
-                    cerrados.push_back(nuevo);
+void vuelta_atras2(std::vector<Tablero>& s, int k, std::list<Tablero>& soluciones)
+//IMPORTANTE: NO SE DEBE LLEVAR UN CONTROL DE ESTADOS REPETIDOS PUES EL amenaza() Y EL completable() SE ENCARGAN DE PODAR
+{
+    int n = s[k-1].dimension();
+    //for(int i = 0; i < n; ++i)        //IMPORTANTE: NO HAY QUE COMPROBAR EN CADA FILA PUES SOLO HABRÁ UNA REINA POR FILA            
+    for(int j = 0; j < n; ++j)
+    {
+        if(!s[k-1].amenazada(k-1, j))
+        {
+            s[k] = s[k-1];
+            s[k].coloca(k-1, j);
 
-                    std::cout << nuevo << std::endl;
-
-                    if(tablero_solucion(nuevo))
-                    {
-                        soluciones.push_back(nuevo);
-                    }
-                    else
-                    {
-                        std::list<Tablero> sol = vuelta_atras(nuevo, cerrados);
-                        soluciones.splice(soluciones.end(), sol);
-                    }
-                }
+            if(tablero_solucion(s[k]))
+            {
+                if(std::find(soluciones.begin(), soluciones.end(), s[k]) == soluciones.end())
+                soluciones.push_back(s[k]);
+            }
+            else
+            {
+                vuelta_atras2(s, k + 1, soluciones);
             }
         }
     }
-    return soluciones;
 }
 
 std::list<Tablero> damas(Tablero& t)
 {
-    std::list<Tablero> cerrados;
-    return vuelta_atras(t, cerrados);
+    std::list<Tablero> soluciones;
+    std::vector<Tablero> s(t.dimension() + 1, t);
+    vuelta_atras2(s, 1, soluciones);
+    return soluciones;
+}
+
+std::list<Tablero> damas2(Tablero& t)
+{
+    std::list<Tablero> soluciones;
+    std::vector<Tablero> s(t.dimension() + 1, t);
+    vuelta_atras1(s, 1, soluciones);
+    return soluciones;
 }
 

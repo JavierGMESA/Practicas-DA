@@ -3,16 +3,15 @@
 CXX = g++
 EXE = programa
 OBJS = main.o damas.o
-CXXFLAGS = -o -ggdb -pg
+CXXFLAGS = -O3
+
 
 all: $(EXE)
 
 $(EXE): $(OBJS)
-	$(CXX) -o $@ $(LDFLAGS) $(LDLIBS) $^
+	$(CXX) -o $@ $(LDFLAGS) $^ $(LDLIBS)
 
-main.o: damas.hpp
-damas.o: damas.hpp
+$(OBJS): damas.hpp
 
 clean:
 	$(RM) $(EXE) $(OBJS) core *~
-

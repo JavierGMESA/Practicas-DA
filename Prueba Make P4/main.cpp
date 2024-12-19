@@ -2,12 +2,16 @@
 #include <map>
 #include <random>
 #include <list>
+#include <charconv>
+#include <cstdlib>
+#include <cstring>
 
 #include "damas.hpp"
 
-void P4ej2();
+void P4ej2(int n);
+void P4ej5(int n);
 
-int main() {
+int main(int argc, char* argv[]) {
     //P1ej1();
     //P1ej2();
     //P1ej3();
@@ -25,17 +29,41 @@ int main() {
     //P3ej7();
 
     //P4ej1();
-    P4ej2();
 
-    std::cout << std::endl << std::endl << "System pause" << std::endl;
+    int n;
+    auto result = std::from_chars(argv[1], argv[1] + std::strlen(argv[1]), n);
+    if (result.ec != std::errc() || n <= 0) {
+        std::cerr << "Error: El tamaño del tablero debe ser un entero positivo." << std::endl;
+    }
+    else
+    {
+        //std::cout << n << std::endl;
+        //P4ej2(n);
+        P4ej5(n);
+    }
+
+    //std::cout << std::endl << std::endl << "System pause" << std::endl;
 }
 
 
 
-void P4ej2()
+void P4ej2(int n)
 {
-    Tablero t(6);
+    Tablero t(n);
     std::list<Tablero> soluciones = damas(t);
+    int i = 1;
+    for(auto s: soluciones)
+    {
+        std::cout << "Solución " << i << ":" << std::endl;
+        std::cout << s << std::endl << std::endl;
+        ++i;
+    }
+}
+
+void P4ej5(int n)
+{
+    Tablero t(n);
+    std::list<Tablero> soluciones = damas2(t);
     int i = 1;
     for(auto s: soluciones)
     {
